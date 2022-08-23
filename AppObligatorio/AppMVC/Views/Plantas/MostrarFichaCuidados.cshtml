@@ -1,0 +1,44 @@
+﻿@model Dominio.EntidadesNegocio.Planta
+
+@{
+    ViewData["Title"] = "MostrarFichaCuidados";
+}
+
+<h1>Ficha de cuidados</h1>
+
+<div>
+    <h4>Planta</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Cuidados.FrecuenciaRiegoCantidad)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Cuidados.FrecuenciaRiegoCantidad)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Cuidados.FrecuenciaRiegoUnidadTiempo)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Cuidados.FrecuenciaRiegoUnidadTiempo)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Cuidados.Temperatura)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Cuidados.Temperatura)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Cuidados.Iluminacion.Tipo)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Cuidados.Iluminacion.Tipo)
+        </dd>
+
+
+    </dl>
+</div>
+<div class="m-4 text-right">
+    @Html.ActionLink("Busqueda", "Index","Busqueda") ||
+    @Html.ActionLink("Detalles", "Details", new { id = Model.Id })
+</div>

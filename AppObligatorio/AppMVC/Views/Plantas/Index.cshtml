@@ -1,0 +1,85 @@
+﻿@using Dominio.EntidadesNegocio;
+@model IEnumerable<Planta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listado de plantas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear una planta</a>
+</p>
+<table class="col table table-striped">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCientifico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlturaMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlFoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ambiente)
+            </th>
+
+            <th>
+                Tipo de planta
+            </th>
+            <th>
+                Nombres vulgares
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCientifico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlturaMax)
+            </td>
+            <td>
+                <img src="~/img/@item.UrlFoto" height="60" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ambiente)
+            </td>
+
+            <td>
+                @item.Tipo.Nombre
+            </td>
+
+            <td>
+                @foreach (var nom in item.ListaNombreVulgares)
+                {
+                    <span>
+                        @nom.Nombre
+                    </span>
+                }
+            </td>
+       
+
+            <td>
+               @* @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |*@
+                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

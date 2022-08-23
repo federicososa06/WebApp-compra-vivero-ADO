@@ -1,0 +1,93 @@
+﻿@model Dominio.EntidadesNegocio.Planta
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Planta</h4>
+    <hr />
+
+    <div class="img-fluid">
+        <img src="~/img/@Model.UrlFoto" alt="foto de la planta" height="180" />
+    </div>
+
+    <dl class="row">
+
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.NombreCientifico)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.NombreCientifico)
+        </dd>
+
+
+
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.AlturaMax)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.AlturaMax)
+        </dd>
+
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Ambiente)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Ambiente)
+        </dd>
+
+        @*TIPO DE PLANTA*@
+        <dt class="col-sm-4">
+            Tipo de planta
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Tipo.Nombre)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Tipo.Descripcion)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Tipo.Descripcion)
+        </dd>
+    </dl>
+
+    @*NOMBRES VULGARES*@
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nombres vulgares
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nom in Model.ListaNombreVulgares)
+            {
+                <tr>
+                    <td class="col-2">
+                        @nom.Nombre
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<div class="m-4 text-right">
+    <a class="btn" btn-primary>
+        @Html.ActionLink("Ficha de cuidados", "MostrarFichaCuidados", new { id = Model.Id })
+    </a>
+    ||
+    <a asp-action="Index"> Volver a la lista</a>
+</div>

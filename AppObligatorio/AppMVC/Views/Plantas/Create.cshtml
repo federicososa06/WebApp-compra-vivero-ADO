@@ -1,0 +1,110 @@
+﻿@using Dominio.EntidadesNegocio;
+@model ViewModelPlanta;
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Planta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*PLANTA*@
+            <div class="form-group">
+                <label asp-for="Planta.NombreCientifico" class="control-label"></label>
+                <input asp-for="Planta.NombreCientifico" class="form-control" />
+                <span asp-validation-for="Planta.NombreCientifico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Nombres vulgares:</label>
+                <input asp-for="listaNombres" class="form-control" />
+                <span asp-validation-for="listaNombres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Planta.Descripcion" class="control-label"></label>
+                <input asp-for="Planta.Descripcion" class="form-control" />
+                <span asp-validation-for="Planta.Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Planta.AlturaMax" class="control-label"></label>
+                <input asp-for="Planta.AlturaMax" class="form-control" />
+                <span asp-validation-for="Planta.AlturaMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagen" class="control-label"></label>
+                <input asp-for="Imagen" class="form-control" />
+                <span asp-validation-for="Imagen" class="text-danger"></span>
+            </div>
+
+            @*AMBIENTE*@
+            <div class="form-group">
+                <label class="control-label">Ambiente:</label>
+                <select name="Planta.Ambiente">
+                    @foreach (var amb in Enum.GetValues(typeof(Ambiente)))
+                    {
+                        <option value="@amb">@amb.ToString()</option>
+                    }
+                </select>
+            </div>
+
+            @* FICHA CUIDADOS *@
+            <div class="form-group">
+                <label asp-for="Planta.Cuidados.FrecuenciaRiegoCantidad" class="control-label"></label>
+                <input asp-for="Planta.Cuidados.FrecuenciaRiegoCantidad" class="form-control" />
+                <span asp-validation-for="Planta.Cuidados.FrecuenciaRiegoCantidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Planta.Cuidados.FrecuenciaRiegoUnidadTiempo" class="control-label"></label>
+                <input asp-for="Planta.Cuidados.FrecuenciaRiegoUnidadTiempo" class="form-control" />
+                <span asp-validation-for="Planta.Cuidados.FrecuenciaRiegoUnidadTiempo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Planta.Cuidados.Temperatura" class="control-label"></label>
+                <input asp-for="Planta.Cuidados.Temperatura" class="form-control" />
+                <span asp-validation-for="Planta.Cuidados.Temperatura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ambiente:</label>
+                <select name="idTipoIluminacionSeleccionada">
+                    @foreach (var item in Model.ListaIluminacion)
+                    {
+                        <option value="@item.Id">@item.Tipo</option>
+                    }
+                </select>
+            </div>
+
+
+
+            @* TIPOS DE PLANTA *@
+            <div class="form-group">
+                <label class="control-label">Tipo Planta:</label>
+                <select name="idTipoSeleccionado">
+                    @foreach (var tipo in Model.ListaTipos)
+                    {
+                        <option value="@tipo.Id">@tipo.Nombre</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+
+           
+        </form>
+    </div>
+</div>
+
+<div class="m-4 text-right">
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

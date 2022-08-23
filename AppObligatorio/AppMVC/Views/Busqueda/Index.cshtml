@@ -1,0 +1,182 @@
+﻿@using Dominio.EntidadesNegocio
+@model AppMVC.Models.ViewModelBusqueda
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Buscar plantas</h1>
+
+@*BUSCAR POR NOMBRE CIENTIFICO*@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <form asp-action="BuscarPorNombreCientifico" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Nombre cientifico:</label>
+                <input type="text" class="form-control" name="NombreCientificoBuscado" />
+                <span class="text-danger">@ViewBag.ErrorNom</span>
+                <input type="submit" value="Buscar" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*BUSCAR POR ALTURA*@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <form asp-action="BuscarPorAltura" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Altura</label>
+                <input type="number" class="form-control" name="AlturaBuscada" />
+
+                <label class="control-label">Seleccione:</label>
+                <select name="MetodoBuscado">
+                    <option value="1">Más bajas</option>
+                    <option value="2">Más altas</option>
+                </select>
+                <span class="text-danger">@ViewBag.ErrorAlt</span>
+                <input type="submit" value="Buscar" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@*BUSCAR POR TIPO*@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <form asp-action="BuscarPorTipo" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Buscar por tipo</label>
+                <select name="idTipoSeleccionado">
+                    @foreach (var tipo in Model.ListaTipos)
+                    {
+                        <option value="@tipo.Id">@tipo.Nombre</option>
+                    }
+                </select>
+                <span class="text-danger">@ViewBag.ErrorTipo</span>
+                <input type="submit" value="Buscar" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@*BUSCAR POR AMBIENTE*@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <form asp-action="BuscarPorAmbiente" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label class="control-label">Ambiente:</label>
+            <select name="AmbienteSeleccionado">
+                @foreach (var amb in Enum.GetValues(typeof(Ambiente)))
+                {
+                    <option value="@amb.ToString()">@amb.ToString()</option>
+                }
+            </select>
+            <span class="text-danger">@ViewBag.ErrorAmb</span>
+            <input type="submit" value="Buscar" class="btn btn-light" />
+        </form>
+    </div>
+</div>
+
+@*BUSCAR TODAS*@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <form asp-action="BuscarTodas" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Listar todas las plantas</label>
+                <span class="text-danger">@ViewBag.ErrorTodas</span>
+                <input type="submit" value="Buscar" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.ListaResultados != null && Model.ListaResultados.Count() > 0)
+{
+    <h4>Resultados</h4>
+
+    <table class="col table table-striped">
+        <thead>
+            <tr>
+
+                <th>
+                    Nombre cientifico
+                </th>
+                <th>
+                    Descripcion
+                </th>
+                <th>
+                    Altura maxima
+                </th>
+                <th>
+                    Foto
+                </th>
+                <th>
+                    Ambiente
+                </th>
+
+                <th>
+                    Tipo de planta
+                </th>
+                <th>
+                    Nombres vulgares
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaResultados)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreCientifico)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlturaMax)
+                    </td>
+                    <td>
+                        <img src="~/img/@item.UrlFoto" height="60" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ambiente)
+                    </td>
+
+                    <td>
+                        @item.Tipo.Nombre
+                    </td>
+
+                    <td>
+                        @foreach (var nom in item.ListaNombreVulgares)
+                        {
+                            <span>
+                                @nom.Nombre
+                            </span>
+                        }
+                    </td>
+
+                    <td>
+                        <a>
+                            @Html.ActionLink("Ficha de cuidados", "MostrarFichaCuidados", "Plantas", new { id = item.Id })
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

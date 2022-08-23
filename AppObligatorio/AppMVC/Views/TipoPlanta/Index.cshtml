@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Dominio.EntidadesNegocio.TipoPlanta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listado Tipo Plantas</h1>
+
+<div class="m-4">
+
+    <a asp-action="Create" class="btn btn-light">Crear un nuevo tipo de planta</a>
+
+    <a asp-action="BuscarPorNombre" class="btn btn-light">Buscar</a>
+
+</div>
+
+<span class="text-danger">
+    @ViewBag.Error
+</span>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
